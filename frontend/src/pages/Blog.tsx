@@ -5,6 +5,7 @@ import Appbar from "../components/Appbar";
 
 function Blog (){
   const {id} = useParams() ;
+  console.log(id)
   const {loading , blog } = useBlog({id:id || ""});
   if(loading){
     return (<div>

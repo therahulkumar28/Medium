@@ -21,7 +21,7 @@ export default function Blogs() {
                 <div className="max-w-8xl">
            
                     {blogs.map((blog: any) => (
-                        <BlogCard
+                        <BlogCard 
                             key={blog.id}
                             authorName={blog.author.name}
                             publishDate={"2 march 2024"}
