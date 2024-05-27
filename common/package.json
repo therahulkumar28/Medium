@@ -1,0 +1,15 @@
+{
+  "name": "@rahulkhg98/medium-common",
+  "version": "1.0.0",
+  "description": "zod validation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rahul Kumar",
+  "license": "ISC",
+  "dependencies": {
+    "install": "^0.13.0",
+    "zod": "^3.22.4"
+  }
+}

@@ -21,7 +21,9 @@ userRoutes.post('/signup', async (c) => {
 	}).$extends(withAccelerate());
 
 	const body = await c.req.json();
+
     const {success} = signupBodyInput.safeParse(body)
+  
     if(!success){
          c.status(411)
         return c.json({
@@ -30,6 +32,7 @@ userRoutes.post('/signup', async (c) => {
       
     }
 	try {
+       
         const existUser = await prisma.user.findUnique(
             {
                 where: {
@@ -38,6 +41,7 @@ userRoutes.post('/signup', async (c) => {
                 },
             }
         )
+       
         if(existUser){
             c.status(403)
             return c.json({
@@ -51,6 +55,7 @@ userRoutes.post('/signup', async (c) => {
 				password: body.password
 			}
 		});
+        console.log(c.env.JWT_SECRET)
 		const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
 		return c.json({ jwt });
 	} catch(e) {

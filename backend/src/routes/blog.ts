@@ -76,7 +76,7 @@ blogRoutes.post('/', async (c) => {
     }
 
   })
-  
+
 blogRoutes.put('/', async (c) => {
     const prisma = new PrismaClient({
       datasourceUrl:c.env?.DATABASE_URL ,
@@ -117,27 +117,32 @@ blogRoutes.put('/', async (c) => {
 
   blogRoutes.get('/bulk', async (c) => {
    
-    const prisma = new PrismaClient({
-      datasourceUrl : c.env.DATABASE_URL ,
-    }).$extends(withAccelerate())
-    
-    const bulkData = await prisma.post.findMany({
-      select:{
-        content:true ,
-        title : true ,
-        id : true ,
-        published:true,
-        author:{
-          select:{
-            name:true
+    try{
+      const prisma = new PrismaClient({
+        datasourceUrl : c.env.DATABASE_URL ,
+      }).$extends(withAccelerate())
+      
+      const bulkData = await prisma.post.findMany({
+        select:{
+          content:true ,
+          title : true ,
+          id : true ,
+          published:true,
+          author:{
+            select:{
+              name:true
+            }
           }
         }
-      }
-    })
-    c.status(200)
-    return c.json({
-     bulkData
-    })
+      })
+      c.status(200)
+      return c.json({
+       bulkData
+      })
+    }
+    catch(e){
+      console.log(e)
+    }
 
   })
 
@@ -152,6 +157,17 @@ blogRoutes.get('/:id',async (c) => {
         const data = await prisma.post.findFirst({
           where :{
             id
+          },
+          select :{
+            id:true ,
+            title:true ,
+            content : true ,
+            author :{
+              select:{
+                name: true
+              }
+              
+            }
           }
           })
           c.status(200)
